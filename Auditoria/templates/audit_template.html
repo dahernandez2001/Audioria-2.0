@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Plantillas de Auditoría</h1>
+    <form method="POST" class="mb-4">
+        <div class="mb-3">
+            <label class="form-label">Título de la plantilla</label>
+            <input type="text" class="form-control" name="title" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Preguntas (separadas por salto de línea)</label>
+            <textarea class="form-control" name="questions" rows="5" required></textarea>
+        </div>
+        <button class="btn btn-primary">Crear Plantilla</button>
+    </form>
+
+    <h3>Plantillas existentes</h3>
+    {% if templates %}
+        <ul class="list-group">
+            {% for t in templates %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ t.title }}
+                <a class="btn btn-success btn-sm" href="{{ url_for('audit_run', tid=t.id) }}">Realizar Auditoría</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay plantillas creadas aún.</p>
+    {% endif %}
+</div>
+{% endblock %}

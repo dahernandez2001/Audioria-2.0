@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="display-5 text-center">Auditorías Realizadas</h1>
+    <p class="text-center">Aquí puedes ver las auditorías completadas según tu rol.</p>
+    <hr>
+
+    {% if records %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID Auditoría</th>
+                <th>Plantilla</th>
+                <th>Empresa</th>
+                <th>Realizada por</th>
+                <th>Fecha</th>
+                <th>Respuestas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rec in records %}
+            <tr>
+                <td>{{ rec.id }}</td>
+                <td>{{ rec.template.title }}</td>
+                <td>{{ rec.company.razon_social }}</td>
+                <td>{{ rec.user.username }}</td>
+                <td>{{ rec.date.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>
+                    <ul>
+                        {% for key, value in rec.answers_dict.items() %}
+                        <li><strong>{{ key }}:</strong> {{ value }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-center">No hay auditorías registradas aún.</p>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a class="btn btn-secondary" href="{{ url_for('index') }}">Volver al Dashboard</a>
+    </div>
+</div>
+{% endblock %}

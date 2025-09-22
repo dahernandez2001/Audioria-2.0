@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Auditoría: {{ template.title }}</h1>
+    <form method="POST">
+        <div class="mb-3">
+            <label class="form-label">Empresa</label>
+            <select class="form-select" name="company_id" required>
+                {% for c in companies %}
+                <option value="{{ c.id }}">{{ c.razon_social }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        {% for q in template.questions.split('\n') %}
+        <div class="mb-3">
+            <label class="form-label">{{ q }}</label>
+            <input type="text" class="form-control" name="{{ q }}" required>
+        </div>
+        {% endfor %}
+
+        <button class="btn btn-success">Guardar Auditoría</button>
+    </form>
+</div>
+{% endblock %}

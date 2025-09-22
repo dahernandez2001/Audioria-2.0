@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Gestión de Documentos</h1>
+    <form method="POST" enctype="multipart/form-data" class="mb-4">
+        <input type="file" name="file" class="form-control mb-2" required>
+        <button class="btn btn-primary">Subir Documento</button>
+    </form>
+
+    <h3>Documentos Subidos</h3>
+    {% if documents %}
+    <ul class="list-group mb-4">
+        {% for doc, user in documents %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ doc.filename }} (subido por {{ user.username }})
+            <div>
+                <a class="btn btn-success btn-sm" href="{{ url_for('download', doc_id=doc.id) }}">Descargar</a>
+                {% if current_user.role=='admin' or doc.uploaded_by==current_user.id %}
+                <form method="POST" action="{{ url_for('delete_document', doc_id=doc.id) }}" class="d-inline">
+                    <button class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No hay documentos subidos.</p>
+    {% endif %}
+
+    <h3>Enlaces Drive</h3>
+    <ul>
+        {% for d in drive_links %}
+        <li><a href="{{ d.url }}" target="_blank">{{ d.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <div class="text-center mt-4">
+        <a class="btn btn-secondary" href="{{ url_for('index') }}">Volver al Dashboard</a>
+    </div>
+</div>
+{% endblock %}

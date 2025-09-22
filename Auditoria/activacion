@@ -1,0 +1,7 @@
+#-------cd /workspaces/Audioria-/Auditoria python3 -m venv .venv source .venv/bin/activate-------
+#-------pip install flask flask_sqlalchemy flask_login werkzeug-------
+#-------pip install flask flask_sqlalchemy flask_login werkzeug-------
+#-------pip show flask-------
+#-------python -m flask --app app run-------
+
+

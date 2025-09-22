@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Registrar Nueva Empresa</h2>
+    <form method="POST" action="{{ url_for('company') }}">
+        <div class="mb-3">
+            <label for="razon_social" class="form-label">Razón Social</label>
+            <input type="text" class="form-control" id="razon_social" name="razon_social" required>
+        </div>
+        <div class="mb-3">
+            <label for="numero_empresa" class="form-label">Número de Empresa</label>
+            <input type="text" class="form-control" id="numero_empresa" name="numero_empresa" required>
+        </div>
+        <div class="mb-3">
+            <label for="nit" class="form-label">NIT</label>
+            <input type="text" class="form-control" id="nit" name="nit" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="representante_legal" class="form-label">Representante Legal</label>
+            <input type="text" class="form-control" id="representante_legal" name="representante_legal">
+        </div>
+        <div class="mb-3">
+            <label for="pagina_web" class="form-label">Página Web</label>
+            <input type="text" class="form-control" id="pagina_web" name="pagina_web">
+        </div>
+        <div class="mb-3">
+            <label for="sector_economico" class="form-label">Sector Económico</label>
+            <input type="text" class="form-control" id="sector_economico" name="sector_economico">
+        </div>
+        <div class="mb-3">
+            <label for="tipo_empresa" class="form-label">Tipo de Empresa</label>
+            <input type="text" class="form-control" id="tipo_empresa" name="tipo_empresa">
+        </div>
+        <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="direccion" name="direccion">
+        </div>
+        <div class="mb-3">
+            <label for="redes_sociales" class="form-label">Redes Sociales</label>
+            <input type="text" class="form-control" id="redes_sociales" name="redes_sociales">
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar Empresa</button>
+    </form>
+
+    <hr class="my-4">
+
+    <h2>Empresas Registradas</h2>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Razón Social</th>
+                <th>Número</th>
+                <th>NIT</th>
+                <th>Correo</th>
+                <th>Representante Legal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in companies %}
+            <tr>
+                <td>{{ c.razon_social }}</td>
+                <td>{{ c.numero_empresa }}</td>
+                <td>{{ c.nit }}</td>
+                <td>{{ c.email }}</td>
+                <td>{{ c.representante_legal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h1 class="display-4">Bienvenido, {{ current_user.username }}</h1>
+    <p class="lead">Rol: {{ current_user.role }}</p>
+    <hr class="my-4">
+
+    <p>Usa la barra de navegación o los botones de abajo para acceder a las secciones permitidas.</p>
+
+    <div class="d-flex flex-column align-items-center gap-2">
+        {% if current_user.role in ['admin', 'empresa'] %}
+        <a class="btn btn-primary btn-lg" href="{{ url_for('company') }}">Registro de Empresas</a>
+        {% endif %}
+
+        {% if current_user.role in ['admin', 'auditor'] %}
+        <a class="btn btn-warning btn-lg" href="{{ url_for('audit_template') }}">Plantillas de Auditoría</a>
+        {% if first_template %}
+        <a class="btn btn-success btn-lg" href="{{ url_for('audit_run', tid=first_template.id) }}">
+            Realizar Auditoría (ejemplo plantilla 1)
+        </a>
+        {% else %}
+        <button class="btn btn-success btn-lg" disabled>No hay plantillas disponibles</button>
+        {% endif %}
+        {% endif %}
+
+        {% if current_user.role in ['admin', 'auditor', 'empresa'] %}
+        <a class="btn btn-secondary btn-lg" href="{{ url_for('audit_records') }}">Auditorías Realizadas</a>
+        {% endif %}
+
+        <a class="btn btn-info btn-lg" href="{{ url_for('documents') }}">Gestión de Documentos</a>
+
+        {% if current_user.role == 'admin' %}
+        <a class="btn btn-danger btn-lg" href="{{ url_for('admin_panel') }}">Panel de Admin</a>
+        {% endif %}
+    </div>
+
+    <br>
+    <a class="btn btn-secondary mt-3" href="{{ url_for('logout') }}">Cerrar sesión</a>
+</div>
+{% endblock %}
